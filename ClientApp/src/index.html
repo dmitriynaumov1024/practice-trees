@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trees, MANY TREES!</title>
+</head>
+<body>
+  <main class="app-container pad-8px">
+    <h2 class="margin-bottom">
+      Tree showcase
+    </h2>
+    <div class="card margin-bottom-3" style="height: 70vh; overflow-y: scroll;">
+      <div id="tree">
+      </div>
+    </div>
+    <p>
+      &copy; 2022 Dmitriy Naumov &ensp;|&ensp; 
+      <a href="github.com/dmitriynaumov1024">My github</a>
+    </p>
+  </main>
+  <template id="tree-node-template">
+    <div class="c-tree-item">
+      <div role="header">
+        <button role="toggle-children" title="Show/hide children">
+          <svg viewBox="0 0 50 50">
+            <rect x="0" y="0" width="50" height="50" 
+              stroke-width="0" fill="var(--color-back)" />
+            <path d="M 19 10 L 35 25 L 19 40 L 19 10 Z" 
+              stroke-width="4" stroke="var(--color-fore)"
+              fill="var(--color-fore)" />
+          </svg>
+        </button>
+        <input role="text" type="text" />
+        <button role="add-child" title="Add child">
+          <svg viewBox="0 0 50 50">
+            <g stroke-width="5" stroke="var(--color-fore)">
+              <path d="M 6 25 L 44 25" />
+              <path d="M 25 6 L 25 44" />
+            </g>
+          </svg>
+        </button>
+        <button role="remove" title="Remove this and children">
+          <svg viewBox="0 0 50 50">
+            <g stroke-width="4" stroke="var(--color-fore)">
+              <path d="M 11 11 L 39 39" />
+              <path d="M 11 39 L 39 11" />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div role="children"></div>
+    </div>
+  </template>
+</body>
+</html>

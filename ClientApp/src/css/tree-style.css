@@ -1,0 +1,111 @@
+.c-tree-item {
+  display: block;
+  overflow: visible;
+}
+
+.c-tree-item>[role="header"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px;
+}
+
+.c-tree-item>[role="header"]>* {
+  margin: 0 6px 0 0;
+}
+
+.c-tree-item>[role="header"]>[role="text"] {
+  padding: 2px 8px;
+  border-radius: 5px;
+  max-width: 30rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  font: inherit;
+  line-height: inherit;
+}
+
+.c-tree-item>[role="header"]:hover>[role="text"] {
+  background-color: var(--color-back-hover);
+}
+
+.c-tree-item>[role="header"]>[role="text"]:focus {
+  background-color: var(--color-back-active);
+}
+
+.c-tree-item button {
+  display: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  padding: 3px 0 0;
+  line-height: 1;
+  background: none;
+}
+
+.c-tree-item>[role="header"]>[role="toggle-children"] {
+  display: inline-block;
+  visibility: hidden;
+  transition: transform 0.3s;
+}
+
+.c-tree-item[has-children="true"]>[role="header"]>[role="toggle-children"] {
+  visibility: visible;
+}
+
+.c-tree-item>[role="header"]:hover>[role="add-child"],
+.c-tree-item>[role="header"]:hover>[role="remove"] {
+  display: inline-block;
+}
+
+.c-tree-item button>svg {
+  display: inline;
+  height: 1rem;
+}
+
+.c-tree-item>[role="children"] {
+  display: none;
+  transition-delay: display 0.3s;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.show-children>[role="children"] {
+  display: block;
+}
+
+.show-children>[role="header"]>[role="toggle-children"] {
+  transform: rotateZ(45deg);
+}
+
+.c-tree-item>[role="children"]>.c-tree-item::before {
+  position: absolute;
+  content: "";
+  left: -0.5rem;
+  width: 1.25rem;
+  height: 1.1rem;
+  border-bottom: 1px solid var(--color-gray);
+}
+
+.c-tree-item>[role="children"]>.c-tree-item::after {
+  position: absolute;
+  content: "";
+  left: -0.5rem;
+  top: 0px;
+  bottom: 0px;
+  width: 1px;
+  border-left: 1px solid var(--color-gray);
+}
+
+.c-tree-item>[role="children"]>.c-tree-item:last-child::after {
+  height: 1.1rem;
+  bottom: unset;
+}
+
+
+

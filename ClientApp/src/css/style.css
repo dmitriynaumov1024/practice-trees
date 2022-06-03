@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-fore);
+  background: var(--color-back);
+  line-height: 1.6;
+  font-family: "Source Sans Pro", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+div {
+  overflow-y: hidden;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  display: block;
+  margin: 0px auto 1.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+h1, .h1 {
+  font-size: 1.25rem;
+}
+
+h2, .h2 {
+  font-size: 1.125rem;
+}
+
+p + *:not(p), * + code[block] {
+  margin-top: 1rem;
+}
+
+pre {
+  font-family: inherit;
+}
+
+code, .code {
+  font-size: 14px;
+  font-family: "Noto Mono", "Consolas", monospace;
+  border-radius: 3px;
+  background-color: var(--color-back-2);
+  border: 1px solid var(--color-back-3);
+  padding: 0px 4px;
+}
+
+.plaincode {
+  font-size: 14px;
+  font-family: "Noto Mono", "Consolas", monospace;
+}
+
+code[block] {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.width-container, .app-container {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 2px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.flex-strip {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.pad-0-4px { padding: 0px 4px; }
+
+.pad-4px { padding: 4px; }
+
+.pad-8px { padding: 8px; }
+
+.tiny-text { font-size: 0.750rem; }
+
+.small-text { font-size: 0.875rem; }
+
+.large-text { font-size: 1.200rem; }
+
+.margin-bottom, .margin-bottom-1 { margin-bottom: 1rem; }
+.margin-bottom-2 { margin-bottom: 2rem; }
+.margin-bottom-3 { margin-bottom: 3rem; }
+
+.no-margin { margin: 0px; }
+
+.text-center { text-align: center; }
+
+.icon-1em { height: 1em; }
+
+.icon-2em { height: 2em; }
+
+/* 30-column layout allows to create 2, 3, 5, 6, 10, 15, 30 equal columns*/
+.col-1 { width: 3.3333%; }
+.col-2 { width: 6.6666%; }
+.col-3 { width: 10.0%; }
+.col-4 { width: 13.3333%; }
+.col-5 { width: 16.6666%; }
+.col-6 { width: 20.0%; }
+.col-7 { width: 23.3333%; }
+.col-8 { width: 26.6666%; }
+.col-9 { width: 30.0%; }
+.col-10 { width: 33.3333%; }
+.col-11 { width: 36.6666%; }
+.col-12 { width: 40.0%; }
+.col-13 { width: 43.3333%; }
+.col-14 { width: 46.6666%; }
+.col-15 { width: 50.0%; }
+.col-16 { width: 53.3333%; }
+.col-17 { width: 56.6666%; }
+.col-18 { width: 60.0%; }
+.col-19 { width: 63.3333%; }
+.col-20 { width: 66.6666%; }
+.col-21 { width: 70.0%; }
+.col-22 { width: 73.3333%; }
+.col-23 { width: 76.6666%; }
+.col-24 { width: 80.0%; }
+.col-25 { width: 83.3333%; }
+.col-26 { width: 86.6666%; }
+.col-27 { width: 90.0%; }
+.col-28 { width: 93.3333%; }
+.col-29 { width: 96.6666%; }
+.col-30 { width: 100.0%; }
+
+/* buttons */
+button, .button, [type="button"] {
+  font: inherit;
+  vertical-align: center;
+}
+
+.button-add {
+  background-color: transparent;
+  color: var(--color-gray);
+  border: 2px dashed var(--color-gray);
+}
+
+.button-add:hover {
+  color: var(--color-gray-hover);
+  border-color: var(--color-gray-hover);
+}
+
+.button-add:active {
+  color: var(--color-gray-active);
+  border-color: var(--color-gray-active);
+}
+
+/* card */
+.card {
+  background-color: var(--color-back);
+  padding: 1rem 1.5rem;
+  min-height: 4rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(120, 120, 120, 0.08);
+}
+
+.list-item-wrap {
+  padding: 4px 0;
+}
+
+.list-item-wrap + .list-item-wrap {
+  border-top: 1px solid var(--color-back-3);
+}
+
+
+/* app container */
+.app-container {
+  display: block;
+  margin: auto;
+  max-width: 480px;
+}
