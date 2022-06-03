@@ -1,0 +1,13 @@
+Tree 
+- _nodes: [TreeNode]
++ addChild(TreeNode)
++ remove(TreeNode)
++ useNodes([TreeNode] -> void) 
+
+
+TreeNode
+- _tree: Tree
+- _text: String
++ id: Number
++ parent: Number
++ text (get, set): String
