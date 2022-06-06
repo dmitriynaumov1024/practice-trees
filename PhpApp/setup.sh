@@ -7,6 +7,7 @@ cp -r ./src/* ./www
 
 echo && echo "[2] building ClientApp..."
 cd ../ClientApp
+npm install
 npm run build 
 cd ../PhpApp
 
