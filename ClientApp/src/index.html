@@ -7,18 +7,36 @@
 </head>
 <body>
   <main class="app-container pad-8px">
-    <h2 class="margin-bottom">
-      Tree showcase
-    </h2>
-    <div class="card margin-bottom-3" style="height: 70vh; overflow-y: scroll;">
+    <div class="margin-bottom-2">
+      <div class="flex-strip margin-bottom">
+        <span class="col-22">Create new tree</span> 
+        <span class="col-2"></span>
+        <button class="col-6" id="button-create-tree" role="primary">Create</button>
+      </div>
+      <div class="flex-strip">
+        <span class="col-13">Or find existing tree by id</span>
+        <input class="col-9" type="text" id="input-tree-id" placeholder="id" maxlength="8"/>
+        <span class="col-2"></span>
+        <button class="col-6" id="button-find-tree" role="primary">Find</button>
+      </div>
+    </div>
+    <div class="card spacer margin-bottom" style="overflow-y: scroll;">
       <div id="tree">
       </div>
     </div>
     <p>
       &copy; 2022 Dmitriy Naumov &ensp;|&ensp; 
-      <a href="github.com/dmitriynaumov1024">My github</a>
+      <a href="github.com/dmitriynaumov1024" target="blank">My github</a>
     </p>
   </main>
+  <template id="empty-tree-template">
+    <div>
+      <div class="margin-bottom-2">
+        <button class="col-30 button-add" role="create">+ Create root</button>
+      </div>
+      <div class="text-center">Woah, so empty here!</div>
+    </div>
+  </template>
   <template id="tree-node-template">
     <div class="c-tree-item">
       <div role="header">

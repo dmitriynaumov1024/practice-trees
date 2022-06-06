@@ -16,6 +16,7 @@ body {
   --color-accent: rgb(240, 90, 21);
   --color-accent-hover: rgb(255, 140, 50);
   --color-accent-active: rgb(235, 82, 16);
+  --color-accent-t: rgba(240, 90, 21, 0.3);
 
   --color-gray: rgb(148, 149, 150);
   --color-gray-hover: rgb(158, 159, 160);

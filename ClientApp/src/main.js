@@ -1,10 +1,22 @@
 import { onDocumentLoad, find, findAll } from "./modules/composition.js"
 import { useTrees } from "./modules/trees.js"
+import axios from "axios"
+
+window.axios = axios
 
 onDocumentLoad (() => {
-  useTrees({
-    root: find("#tree")
-  })
+  find("#button-create-tree").onclick = function () {
+    useTrees({
+      root: find("#tree")
+    })
+  }
+
+  find("#button-find-tree").onclick = function () {
+    useTrees({
+      root: find("#tree"),
+      treeId: Number(find("#input-tree-id").value)
+    })
+  }
 })
 
 import "./css/style.css"

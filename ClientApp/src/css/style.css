@@ -25,8 +25,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-div {
-  overflow-y: hidden;
+/* app container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: 100vh;
+  max-width: 480px;
+  overflow: hidden;
+}
+
+.app-container>* {
+  display: block;
+  flex-shrink: 0;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -72,12 +83,6 @@ code[block] {
   white-space: pre-wrap;
 }
 
-.width-container, .app-container {
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 2px;
-}
-
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -92,6 +97,7 @@ code[block] {
 
 .spacer {
   flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .pad-0-4px { padding: 0px 4px; }
@@ -152,25 +158,79 @@ code[block] {
 
 /* buttons */
 button, .button, [type="button"] {
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  line-height: inherit;
+  background: none;
   font: inherit;
-  vertical-align: center;
+  font-weight: bold;
+  transition: background-color 0.2s;
 }
 
-.button-add {
+[role="primary"] {
+  background-color: var(--color-accent);
+  color: var(--color-back);
+}
+
+[role="primary"]:hover {
+  background-color: var(--color-accent-hover);
+  box-shadow: 0 1px 8px rgba(120, 120, 120, 0.1);
+}
+
+[role="primary"]:active {
+  background-color: var(--color-accent-active);
+}
+
+[role="create"] {
   background-color: transparent;
   color: var(--color-gray);
   border: 2px dashed var(--color-gray);
 }
 
-.button-add:hover {
+[role="create"]:hover {
   color: var(--color-gray-hover);
   border-color: var(--color-gray-hover);
 }
 
-.button-add:active {
+[role="create"]:active {
   color: var(--color-gray-active);
   border-color: var(--color-gray-active);
 }
+
+/* input */
+input:not([type]),
+input[type="text"], 
+input[type="password"], 
+input[type="number"], 
+input[type="email"], 
+textarea {
+    font-size: 0.9rem;
+    line-height: inherit;
+    color: inherit;
+    background-color: transparent;
+    display: block;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--color-accent-t);
+    transition: border 0.2s;
+    resize: none;
+    padding: 1px 2px;
+}
+
+input:not([type]),
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+textarea:focus {
+    background-color: var(--color-back-0);
+    border-bottom-color: var(--color-accent-active);
+}
+
 
 /* card */
 .card {
@@ -187,12 +247,4 @@ button, .button, [type="button"] {
 
 .list-item-wrap + .list-item-wrap {
   border-top: 1px solid var(--color-back-3);
-}
-
-
-/* app container */
-.app-container {
-  display: block;
-  margin: auto;
-  max-width: 480px;
 }
