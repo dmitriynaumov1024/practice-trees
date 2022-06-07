@@ -1,8 +1,11 @@
 Tree 
-- _nodes: [TreeNode]
++ id: Number
++ nodes: [TreeNode]
 + addChild(TreeNode)
 + remove(TreeNode)
-+ useNodes([TreeNode] -> void) 
++ useNodes(Tree -> void) 
++ useManyRemoveConfirm(() -> Promise)
++ useTreeRemoveConfirm(() -> Promise)
 
 
 TreeNode
