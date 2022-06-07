@@ -1,9 +1,9 @@
 body {
-  --color-fore: rgb(10, 10, 11);
-  --color-fore-0: rgb(10, 10, 11);
-  --color-fore-1: rgb(20, 20, 22);
-  --color-fore-2: rgb(34, 34, 36);
-  --color-fore-3: rgb(45, 45, 48);
+  --color-fore: rgb(40, 41, 44);
+  --color-fore-0: rgb(40, 41, 44);
+  --color-fore-1: rgb(50, 51, 55);
+  --color-fore-2: rgb(60, 61, 66);
+  --color-fore-3: rgb(70, 72, 77);
 
   --color-back: rgb(254, 254, 254);
   --color-back-0: rgb(254, 254, 254);

@@ -70,7 +70,6 @@
 
 .c-tree-item>[role="children"] {
   display: none;
-  transition-delay: display 0.3s;
   margin-left: 0.5rem;
   padding-left: 0.5rem;
 }

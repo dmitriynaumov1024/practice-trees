@@ -6,19 +6,20 @@
   box-sizing: border-box;
   margin: 0;
   position: relative;
-  font-weight: normal;
+  font-weight: inherit;
+  line-height: inherit;
   text-decoration: none;
 }
 
 html {
   font-size: 16px;
+  line-height: 1.6;
 }
 
 body {
   min-height: 100vh;
   color: var(--color-fore);
   background: var(--color-back);
-  line-height: 1.6;
   font-family: "Source Sans Pro", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -58,6 +59,16 @@ h2, .h2 {
 
 p + *:not(p), * + code[block] {
   margin-top: 1rem;
+}
+
+u { text-decoration: underline; }
+
+i { font-style: italic; }
+
+b { font-weight: bold; }
+
+a {
+  color: #5680f0;
 }
 
 pre {
@@ -164,28 +175,70 @@ button, .button, [type="button"] {
   outline: none;
   border: none;
   box-shadow: none;
-  line-height: inherit;
   background: none;
   font: inherit;
+  line-height: 1.3;
   font-weight: bold;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border 0.2s;
 }
 
-[role="primary"] {
+.primary, [role="primary"] {
+  padding-left: 1rem;
+  padding-right: 1rem; 
   background-color: var(--color-accent);
+  border: 2px solid var(--color-accent);
   color: var(--color-back);
 }
 
-[role="primary"]:hover {
+.primary:hover, [role="primary"]:hover {
   background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
   box-shadow: 0 1px 8px rgba(120, 120, 120, 0.1);
 }
 
-[role="primary"]:active {
+.primary, [role="primary"]:active {
   background-color: var(--color-accent-active);
+  border-color: var(--color-accent-active);
+}
+
+/*
+.secondary, [role="secondary"] {
+  padding-left: 1rem;
+  padding-right: 1rem; 
+  background-color: transparent;
+  border: 2px solid var(--color-accent-t);
+  color: var(--color-accent);
+}
+
+.secondary:hover, [role="secondary"]:hover {
+  border-color: var(--color-accent-hover);
+  box-shadow: 0 1px 8px rgba(120, 120, 120, 0.1);
+}
+
+.secondary:active, [role="secondary"]:active {
+  border-color: var(--color-accent-active);
+}
+*/
+.secondary, [role="secondary"] {
+  padding-left: 1rem;
+  padding-right: 1rem; 
+  background-color: transparent;
+  border: 2px solid var(--color-gray);
+  color: var(--color-fore);
+}
+
+.secondary:hover, [role="secondary"]:hover {
+  border-color: var(--color-fore);
+  box-shadow: 0 1px 8px rgba(120, 120, 120, 0.1);
+}
+
+.secondary:active, [role="secondary"]:active {
+  border-color: var(--color-fore);
 }
 
 [role="create"] {
+  padding-left: 1rem;
+  padding-right: 1rem; 
   background-color: transparent;
   color: var(--color-gray);
   border: 2px dashed var(--color-gray);

@@ -25,3 +25,7 @@ export function isObject (o) {
 export function isArray (o) {
   return o.constructor == Array.prototype.constructor
 }
+
+export function isFunction (o) {
+  return typeof(o) == "function"
+}

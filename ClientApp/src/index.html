@@ -29,6 +29,62 @@
       <a href="github.com/dmitriynaumov1024" target="blank">My github</a>
     </p>
   </main>
+  <div class="modal-wrapper" role="info-modal-wrapper">
+    <div class="card modal" role="modal">
+      <div class="flex-strip margin-bottom">
+        <span class="spacer">
+          <b role="modal-caption"></b>
+        </span>
+        <button role="modal-close">
+          <svg viewBox="0 0 50 50">
+            <g stroke-width="4" stroke="var(--color-fore)">
+              <path d="M 11 11 L 39 39" />
+              <path d="M 11 39 L 39 11" />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="pad-4px margin-bottom-2" role="modal-content">
+      </div>
+      <div class="flex-strip">
+        <span class="spacer" role="modal-timer"></span>
+        <span class="col-1"></span>
+        <button class="primary" role="modal-yes"></button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-wrapper" role="confirmation-modal-wrapper">
+    <div class="card modal" role="modal">
+      <div class="flex-strip margin-bottom">
+        <span class="spacer">
+          <b role="modal-caption"></b>
+        </span>
+        <button role="modal-close">
+          <svg viewBox="0 0 50 50">
+            <g stroke-width="4" stroke="var(--color-fore)">
+              <path d="M 11 11 L 39 39" />
+              <path d="M 11 39 L 39 11" />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="pad-4px margin-bottom-2" role="modal-content">
+      </div>
+      <div class="flex-strip">
+        <span class="spacer" role="modal-timer"></span>
+        <span class="col-1"></span>
+        <button class="primary" role="modal-yes"></button>
+        <span class="col-1"></span>
+        <button class="secondary" role="modal-no"></button>
+      </div>
+    </div>
+  </div>
+  <template id="save-prompt-template">
+    <div class="flex-strip margin-bottom" role="save-prompt">
+      <span class="spacer">You have some unsaved changes.</span>
+      <button class="secondary" role="save">Save</button>
+    </div>
+  </template>
   <template id="empty-tree-template">
     <div>
       <div class="margin-bottom-2">

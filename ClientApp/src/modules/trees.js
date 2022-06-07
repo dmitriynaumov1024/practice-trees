@@ -1,26 +1,39 @@
 import axios from "axios"
-import { isString, isNumber, isObject, isArray } from "./safety.js"
+import { isString, isNumber, isObject, isArray, isFunction } from "./safety.js"
 import { find, findAll } from "./composition.js"
+import { showInfoModal, showConfirmationModal } from "./modal.js"
 
-
+// Tree is main data structure here
 function Tree (options) {
 
   var _id = options.id
   var _nodes = []
+  var _modified = false
+  var _message = undefined
+  var _lastId = -1
   
+  var _onChangeCallbacks = []
+  var _manyRemoveConfirm = undefined
+  var _rootRemoveConfirm = undefined
+
   var tree = { 
     get id () {
       return _id 
     },
     get nodes () {
       return _nodes
+    },
+    get modified () {
+      return _modified
+    },
+    get message () {
+      return _message
     }
   }
 
-  var _onChangeCallbacks = []
-
   const _onChange = () => _onChangeCallbacks.forEach(f => f(tree))
 
+  // create tree node
   function TreeNode (options) {
     /*
       options: {
@@ -29,7 +42,11 @@ function Tree (options) {
         text: String
       }
     */
-    options.ensureProp("text", isString).or(`untitled#${options.id}`)
+    options.ensureProp("id", id => isNumber(id) && !_nodes.find(n => n.id == id))
+           .or(()=> _lastId++)
+
+    options.ensureProp("text", isString)
+           .or(`untitled#${options.id}`)
 
     var _nodeid = options.id
     var _text = options.text
@@ -45,80 +62,100 @@ function Tree (options) {
         return _text
       },
       set text (value) {
-        var fail = value.fail
-        if (typeof(value) == "object") value = value.value
-        axios({
-          method: "post",
-          url: "/api/treenode/edit.php",
-          data: {
-            tree: _id,
-            id: _nodeid,
-            newtext: value
-          }
-        })
-        .then(r => {
-          if (r.data.success) {
-            _text = value
-            _onChange()
-          }
-          else {
-            if (typeof(fail) == "function") fail()
-          }
-        })
-        .catch(e => {
-          console.warn(e)
-          if (typeof(fail) == "function") fail()
-        })
+        if (_text == value) return
+        _text = value
+        _modified = true
+        _onChange()
+      },
+      get hasChildren() {
+        return !!_nodes.find(node => node.parent == this.id)
       }
     }
   }
 
-  _nodes = options.nodes.map(item => TreeNode(item))
+  function _hasChildren (node) {
+    return node.hasChildren
+  }
+
+  function _isRootNode (node) {
+    return node.parent == null
+  }
+
+  function _removeRec (node) {
+    var _bad = _nodes.filter(item => item.parent == node.id)
+    _nodes = _nodes.filter(item => item.parent != node.id && item != node)
+
+    for (var item of _bad) {
+      _removeRec(item)
+    }
+  }
+
+  function _removeIf (condition) {
+    return (node) => { 
+      if (condition) {
+        _removeRec(node)
+        _modified = true
+        _onChange()
+      } 
+    }
+  }
+
+  _nodes = options.nodes
+    .map(item => TreeNode(item))
+
+  _lastId = options.nodes
+    .reduce((prev, item) => item.id > prev ? item.id : prev, 0) + 1
 
   // Add child to given parent node
   tree.addChild = (parent = { id: null }) => {
-    var defaultText = "Untitled node"
-    axios({
-      method: "post",
-      url: "/api/treenode/create.php",
-      data: { 
-        parent: parent.id, 
-        tree: _id,
-        text: defaultText
-      }
-    })
-    .then(r => {
-      if (r.data.success) {
-        _nodes.push(TreeNode({
-          parent: parent.id,
-          id: r.data.id,
-          text: defaultText
-        }))
-        _onChange()
-      }
-      else {
-        window.alert(r.data.message || "Unknown error")
-      }
-    })
+    _nodes.push(TreeNode({
+      parent: parent.id
+    }))
+    _modified = true
+    _onChange()
   }
   
   // Remove given node
   tree.remove = (node) => {
+    if (_isRootNode(node) && _rootRemoveConfirm) {
+      _rootRemoveConfirm()
+        .then(agree => { _removeIf(agree)(node); _lastId = 1 })
+    }
+    else if (_hasChildren(node) && _manyRemoveConfirm) {
+      _manyRemoveConfirm()
+        .then(agree => { _removeIf(agree)(node) })
+    }
+    else {
+      _removeRec(node)
+      _modified = true
+      _onChange()
+    }
+  }
+
+  // Flush unsaved changes
+  tree.flush = () => {
     axios({
       method: "post",
-      url: "/api/treenode/remove.php",
-      data: { 
-        id: node.id, 
-        tree: _id 
+      url: "api/tree/update.php",
+      data: {
+        id: _id,
+        nodes: _nodes.map(n => ({
+          id: n.id,
+          parent: n.parent,
+          text: n.text
+        }))
       }
     })
     .then(r => {
+      console.log(r.data)
       if (r.data.success) {
-        _nodes = r.data.nodes.map(item => TreeNode(item))
+        _modified = false
+        _message = undefined
         _onChange()
       }
       else {
-        window.alert(r.data.message || "Unknown error")
+        _message = r.data.message
+        _onChange()
       }
     })
   }
@@ -129,13 +166,19 @@ function Tree (options) {
     callback(tree)
   }
 
+  tree.useManyRemoveConfirm = (callback) => {
+    if (isFunction(callback)) _manyRemoveConfirm = callback
+  }
+
+  tree.useRootRemoveConfirm = (callback) => {
+    if (isFunction(callback)) _rootRemoveConfirm = callback
+  }
+
   return tree
 }
 
 // Render a tree
 function renderTree (tree, root) {
-
-  // DECLARE SOME FUNCTIONS
 
   // Make Dom Node id
   function makeDomNodeId (root, id) {
@@ -161,10 +204,7 @@ function renderTree (tree, root) {
       }
       if (el.getAttribute("role") == "text") {
         el.onchange = (event) => {
-          node.text = { 
-            value: event.target.value,
-            fail: () => event.target.value = node.text
-          }
+          node.text = event.target.value
         }
       }
       if (el.getAttribute("role") == "add-child") {
@@ -184,8 +224,7 @@ function renderTree (tree, root) {
 
   // Update existing Tree item view
   function updateTreeItemView (node, domNode) {
-    domNode.setAttribute("has-children", 
-      !!tree.nodes.find(item => item.parent == node.id))
+    domNode.setAttribute("has-children", node.hasChildren)
 
     for (var el of domNode.children[0].children) {
       if (el.getAttribute("role") == "text") {
@@ -206,6 +245,17 @@ function renderTree (tree, root) {
     return domNode
   }
 
+  function createSavePromptView () {
+    var domNode = find("#save-prompt-template")
+      .content.cloneNode(true).children[0]
+    
+    domNode.querySelector(`[role="save"]`).onclick = () => {
+      tree.flush()
+    }
+
+    return domNode
+  }
+
   // If tree is empty, display a button to create root node
   if (!tree.nodes || !tree.nodes.length) {
     console.log("empty tree")
@@ -215,7 +265,8 @@ function renderTree (tree, root) {
     return
   }
 
-  if (root.getAttribute("state") == "empty" || root.innerText) {
+  if (root.getAttribute("state") == "empty") {
+    console.log("hard reset")
     root.innerHTML = ""
     root.removeAttribute("state")
   }
@@ -237,6 +288,22 @@ function renderTree (tree, root) {
       find(`#${makeDomNodeId(root.id, node.parent)}>[role='children']`)
     parent.appendChild(view)
   }) 
+
+  if (tree.modified) {
+    if (root.querySelector(`[role="save-prompt"]`)) return
+    root.prepend(createSavePromptView())
+  }
+  else {
+    root.querySelector(`[role="save-prompt"]`)?.remove()
+  }
+
+  if (tree.message) {
+    showInfoModal({
+      caption: "Note",
+      text: tree.message,
+      yesText: "Dismiss"
+    })
+  }
 }
 
 export function useTrees (options) {
@@ -248,14 +315,12 @@ export function useTrees (options) {
   */
   if (!options.root) return
   var root = options.root
-
-  var t = undefined
   
-  var promise = (options.treeId) ? 
+  var promise = (isNumber(options.treeId)) ? 
     axios ({
       method: "get",
-      url: "/api/treenode/getall.php",
-      params: { tree: options.treeId }
+      url: "/api/tree/get.php",
+      params: { id: options.treeId }
     }) :
     axios ({
       method: "get",
@@ -264,22 +329,35 @@ export function useTrees (options) {
 
   promise.then(r => {
     if (! r.data) {
+      root.innerHTML = "Unknown error"
       return
     }
     if (r.data.success) { 
       console.log(r.data)
       console.log("success!")
-      t = Tree ({
+      var t = Tree ({
         id: r.data.id || options.treeId,
         nodes: r.data.nodes || []
       })
       t.useNodes((tree) => {
         renderTree(tree, root)
       })
+      t.useRootRemoveConfirm(() => showConfirmationModal({
+        caption: "Dangerous action",
+        text: "You are going to delete ALL nodes of this tree. "
+          + "This action can not be undone. "
+          + "Are you sure you want to do this?",
+        yesText: "Yes, delete",
+        noText: "Back to safety",
+        timeout: 20
+      }))
     }
     else {
-      root.innerHTML = r.data.message || 
-        "Unknown error while trying to find existing tree"
+      showInfoModal({ 
+        caption: "Something went wrong",
+        text: r.data.message || "Unknown error",
+        yesText: "Dismiss"
+      }) 
       return 
     }
   })

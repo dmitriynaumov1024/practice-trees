@@ -1,5 +1,7 @@
 import { onDocumentLoad, find, findAll } from "./modules/composition.js"
 import { useTrees } from "./modules/trees.js"
+import { showConfirmationModal } from "./modules/modal.js"
+
 import axios from "axios"
 
 window.axios = axios
@@ -21,4 +23,5 @@ onDocumentLoad (() => {
 
 import "./css/style.css"
 import "./css/theme.css"
-import "./css/tree-style.css"
+import "./css/trees.css"
+import "./css/modal.css"
