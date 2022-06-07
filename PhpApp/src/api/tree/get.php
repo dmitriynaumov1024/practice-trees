@@ -1,18 +1,20 @@
 <?php
 include '../webapi.php';
 
-handlePost (function ($data) {
+handleGet (function ($data) {
   if (! isset($data["id"])) return [
     "success" => false,
     "message" => "Bad request: parameter 'id' not set"
   ];
-  
+
   return useDatabase (function ($conn) use ($data) {
-    $s = $conn->prepare("delete from Trees where id=(?) limit 1");
-    $s->bind_param("i", $data["id"]);
-    $s->execute();
+    $q = $conn->prepare("select id, nodesEncoded from Trees where id=(?) limit 1");
+    $q->bind_param("i", $data["id"]);
+    $q->execute();
+    $result = $q->get_result()->fetch_assoc();
     if ($conn->affected_rows) return [
-      "success" => true
+      "success" => true,
+      "nodes" => json_decode($result["nodesEncoded"])
     ];
     else return [
       "success" => false,
