@@ -1,4 +1,17 @@
 # Practice
+
+A simple web application to view and edit tree structures.
+
+## Demo
+Screenshots and database dump can be found in `showcase` directory.
+Explaination of data structure, actions and Web API outline can be found 
+in `science` directory.
+
+## Technologies
+- Front-end: HTML+CSS+JS
+- Back-end: PHP
+- Database: MySQL
+
 ## Requirements
 - Unix-like system
 - npm (Node package manager)
