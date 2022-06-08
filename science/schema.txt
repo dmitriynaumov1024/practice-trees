@@ -1,6 +1,7 @@
 Tree 
 + id: Number
 + nodes: [TreeNode]
++ flush()
 + addChild(TreeNode)
 + remove(TreeNode)
 + useNodes(Tree -> void) 
@@ -9,8 +10,6 @@ Tree
 
 
 TreeNode
-- _tree: Tree
-- _text: String
 + id: Number
 + parent: Number
-+ text (get, set): String
++ text: String
