@@ -1,0 +1,89 @@
+Actions
+
+- create tree 
+  - output: tree id 
+
+- delete tree
+  - input: tree id
+  - output: success/fail
+
+- get nodes of tree 
+  - input: tree id
+  - output: success/fail, nodes
+
+- create node
+  - input: tree id, parent id, text
+  - output: success/fail, node id
+
+- edit node
+  - input: tree id, node id, new text
+  - output: success/fail
+
+- remove node
+  - input: tree id, node id
+  - output: success/fail, nodes
+
+
+WebAPI outline
+
+- get /api/tree/create.php
+  - input: { }
+  - output: { 
+      id: Number 
+    }
+
+- post /api/tree/delete.php
+  - input: { 
+      id: Number 
+    }
+  - output: { 
+      success: Boolean 
+    }
+
+- get /api/treenode/getall.php
+  - input: { 
+      tree: Number 
+    }
+  - output: {
+      success: Boolean,
+      nodes: [{
+        id: Number,
+        parent: Number,
+        text: String
+      }]
+    }
+
+- post /api/treenode/create.php
+  - input: {
+      tree: Number,
+      parent: Number,
+      text: String
+    }
+  - output: {
+      success: Boolean,
+      id: Number
+    }
+
+- post /api/treenode/edit.php
+  - input: {
+      tree: Number,
+      id: Number,
+      newtext: String 
+    }
+  - output: {
+      success: Boolean
+    }
+
+- post /api/treenode/remove.php
+  - input: {
+      tree: Number,
+      id: Number
+    }
+  - output: {
+      success: Boolean,
+      nodes: [{
+        id: Number,
+        parent: Number,
+        text: String
+      }]
+    }

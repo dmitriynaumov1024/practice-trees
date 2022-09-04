@@ -1,0 +1,15 @@
+Tree 
++ id: Number
++ nodes: [TreeNode]
++ flush()
++ addChild(TreeNode)
++ remove(TreeNode)
++ useNodes(Tree -> void) 
++ useManyRemoveConfirm(() -> Promise)
++ useTreeRemoveConfirm(() -> Promise)
+
+
+TreeNode
++ id: Number
++ parent: Number
++ text: String
