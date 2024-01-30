@@ -1,0 +1,15 @@
+{
+  "name": "trees-backend",
+  "version": "0.0.1",
+  "author": "Dmitriy Naumov",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node ./task/serve.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  }
+}
