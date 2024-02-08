@@ -22,6 +22,7 @@ A simple web application to view and edit tree structures.
     npm i
     npm run build
     cd ../back
+    cp .env.example .env
     npm run serve
     ```
 - Open [http://localhost:8000/](http://localhost:8000/) in browser, and have fun!
