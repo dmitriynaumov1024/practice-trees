@@ -1,4 +1,5 @@
 import express from "express"
+import fs from "node:fs"
 
 // stolen from
 // https://www.npmjs.com/package/async-error-catcher?activeTab=code
@@ -58,11 +59,26 @@ class Application
     constructor(app) {
         this.app = app || express()
         this.raw = this.app
+        this.raw.use(express.json())
         this.listen = (...args) => this.app.listen(...args)
         for (let method of httpMethods) {
             this[method] = (path, handler) => {
                 return this.app[method](path, catchErrors(handler))
             }
+        }
+    }
+
+    "static" (...args) {
+        this.app.use(express.static(...args))
+    }
+
+    fallback (path) {
+        try {
+            let file = fs.readFileSync(path, { encoding: "utf8" })
+            this.app.use((request, response)=> response.status(200).send(file))
+        }
+        catch (error) {
+            // ignore
         }
     }
 
