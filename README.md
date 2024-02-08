@@ -14,6 +14,18 @@ A simple web application to view and edit tree structures.
 - node >= 18
 - npm >= 8
 
+## Usage
+
+- Execute this in terminal
+    ```
+    cd front 
+    npm i
+    npm run build
+    cd ../back
+    npm run serve
+    ```
+- Open [http://localhost:8000/](http://localhost:8000/) in browser, and have fun!
+
 ## License
 
 MIT License
